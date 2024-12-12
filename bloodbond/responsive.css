@@ -1,0 +1,219 @@
+/* Base responsive styles for all pages */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Mobile styles (up to 768px) */
+@media screen and (max-width: 768px) {
+    /* Header & Navigation */
+    header {
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    #logo img {
+        width: 120px;
+        padding: 10px;
+    }
+
+    .header-list ul {
+        flex-direction: column;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.9);
+        padding-top: 80px;
+        transition: 0.5s;
+        z-index: 1000;
+    }
+
+    .header-list ul li {
+        margin: 15px 0;
+        text-align: center;
+    }
+
+    .fa-bars, .fa-times {
+        display: block;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    /* Text and Content */
+    .text-box {
+        padding: 20px;
+        text-align: center;
+    }
+
+    .text-box h1 {
+        font-size: 2rem;
+    }
+
+    .text-box p {
+        font-size: 1rem;
+        margin: 10px 0;
+    }
+
+    /* About Section */
+    .about .row {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .about-col {
+        width: 100%;
+        margin: 20px 0;
+    }
+
+    /* Volunteer Section */
+    .volunteer {
+        padding: 20px;
+    }
+
+    .volunt {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    /* Customer Review Section */
+    .customer-review {
+        padding: 20px;
+    }
+
+    .row-customer {
+        flex-direction: column;
+    }
+
+    .col-customer {
+        width: 100%;
+        margin: 15px 0;
+    }
+
+    /* Forms (Login, Register, etc.) */
+    .form-container {
+        width: 90%;
+        padding: 20px;
+        margin: 20px auto;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select {
+        width: 100%;
+        margin: 8px 0;
+    }
+
+    /* Footer */
+    .footer-content {
+        padding: 20px;
+        text-align: center;
+    }
+
+    .socials ul {
+        justify-content: center;
+    }
+}
+
+/* Tablet styles (768px to 1024px) */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    /* Header & Navigation */
+    .text-box h1 {
+        font-size: 2.5rem;
+    }
+
+    /* About Section */
+    .about .row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 30px;
+    }
+
+    /* Volunteer Section */
+    .volunt {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    /* Customer Review */
+    .row-customer {
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .col-customer {
+        width: 45%;
+        margin: 15px;
+    }
+
+    /* Forms */
+    .form-container {
+        width: 70%;
+        margin: 30px auto;
+    }
+}
+
+/* Larger screens (above 1024px) */
+@media screen and (min-width: 1025px) {
+    .about .row {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+    }
+
+    .volunt {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+    }
+
+    .form-container {
+        width: 50%;
+        max-width: 800px;
+        margin: 40px auto;
+    }
+}
+
+/* Common responsive utilities */
+.responsive-img {
+    max-width: 100%;
+    height: auto;
+}
+
+.responsive-video {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+}
+
+.responsive-video iframe,
+.responsive-video video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Print styles */
+@media print {
+    .no-print {
+        display: none;
+    }
+    
+    body {
+        font-size: 12pt;
+    }
+    
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+} 

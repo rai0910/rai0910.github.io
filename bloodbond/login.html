@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href='./Images/bb_logo(black).png' type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="help.css">
+    <title>Login - Blood Bond</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        /* Adjust login container to account for header */
+        .login-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            margin: 0px auto 50px; /* Added top margin to account for fixed header */
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo img {
+            width: 150px;
+            height: auto;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #E52B50;
+            outline: none;
+        }
+
+        .error-message {
+            color: #E52B50;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .login-btn {
+            background: #E52B50;
+            color: white;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: #D41E45;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .register-link a {
+            color: #E52B50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .alert-error {
+            background: #ffe6e6;
+            color: #E52B50;
+            border: 1px solid #ffcccc;
+        }
+
+        .alert-success {
+            background: #e6ffe6;
+            color: #28a745;
+            border: 1px solid #ccffcc;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="header-logo">
+                <img src="./Images/bb_logo(black).png">
+            </div>
+            <div class="header-list">
+                <ul>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="help.html">Get Help</a></li>
+                    <li><a href="donate.html">Donate</a></li>
+                    <li><a href="index.html#vol-sect">Volunteer</a></li>
+                    <li><a href="index.html">Home</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="login-container">
+        <div class="logo">
+            <a href="index.html">
+                <img src="./Images/bb_logo(white).png" alt="Blood Bond Logo">
+            </a>
+        </div>
+        
+        <h1>Welcome Back</h1>
+
+        <div class="alert alert-error" id="error-alert"></div>
+        <div class="alert alert-success" id="success-alert"></div>
+
+        <form action="handlers/login.php" method="POST" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+                <div class="error-message" id="email-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <div class="error-message" id="password-error"></div>
+            </div>
+
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+
+        <div class="register-link">
+            Don't have an account? <a href="register.html">Register Now</a>
+        </div>
+    </div>
+
+    <script>
+        // Show error/success messages from URL parameters
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const error = urlParams.get('error');
+            const success = urlParams.get('success');
+
+            if (error) {
+                const errorAlert = document.getElementById('error-alert');
+                errorAlert.style.display = 'block';
+                errorAlert.textContent = decodeURIComponent(error);
+            }
+
+            if (success) {
+                const successAlert = document.getElementById('success-alert');
+                successAlert.style.display = 'block';
+                successAlert.textContent = 'Registration successful! Please login.';
+            }
+        }
+
+        // Form validation
+        function validateForm() {
+            let isValid = true;
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+
+            // Reset error messages
+            document.getElementById('email-error').style.display = 'none';
+            document.getElementById('password-error').style.display = 'none';
+
+            // Email validation
+            if (!email.value.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)) {
+                document.getElementById('email-error').textContent = 'Please enter a valid email address';
+                document.getElementById('email-error').style.display = 'block';
+                isValid = false;
+            }
+
+            // Password validation
+            if (password.value.length < 6) {
+                document.getElementById('password-error').textContent = 'Password must be at least 6 characters long';
+                document.getElementById('password-error').style.display = 'block';
+                isValid = false;
+            }
+
+            return isValid;
+        }
+    </script>
+</body>
+</html> 
